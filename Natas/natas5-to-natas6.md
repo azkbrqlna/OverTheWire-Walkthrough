@@ -2,7 +2,7 @@
 
 ### Challenge
 
-- **URL: http://natas4.natas.labs.overthewire.org/**
+- **URL: http://natas5.natas.labs.overthewire.org/**
 
 ![alt text](images/image-16.png)
 When you land on the page, it displays the message:
