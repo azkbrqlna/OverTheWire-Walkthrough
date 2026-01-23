@@ -6,7 +6,7 @@
 - **Username:** `natas0`
 - **Password:** `natas0`
 
-## ![alt text](images/image.png)
+![alt text](images/image.png)
 
 ### Walkthrough
 
