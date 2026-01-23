@@ -4,7 +4,7 @@
 
 - **URL: http://natas4.natas.labs.overthewire.org/**
 
-![alt text](images/image13.png)
+![alt text](images/image-13.png)
 
 Upon logging in, the page displays an error message:
 
