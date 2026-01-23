@@ -4,7 +4,7 @@
 
 - **URL: http://natas1.natas.labs.overthewire.org/**
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 The page content is identical to the previous level, but there is a security measure in place: Right-click has been disabled to prevent users from easily accessing the "Inspect" or "View Source" menu.
 
@@ -17,7 +17,7 @@ The page content is identical to the previous level, but there is a security mea
 - **Developer Tools:** Press `F12` or `Ctrl + Shift + I` to open the Inspector directly.
 
 2. Look within the HTML elements. Developers often leave comments in the code that are not visible on the rendered page.
-   ![alt text](image-3.png)
+   ![alt text](images/image-3.png)
 
 ---
 
