@@ -17,8 +17,7 @@ The page content is identical to the previous level, but there is a security mea
 - **Developer Tools:** Press `F12` or `Ctrl + Shift + I` to open the Inspector directly.
 
 2. Look within the HTML elements. Developers often leave comments in the code that are not visible on the rendered page.
-   > **Result:**
-   > ![alt text](image-3.png)
+   ![alt text](image-3.png)
 
 ---
 
