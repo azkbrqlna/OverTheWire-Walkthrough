@@ -2,7 +2,7 @@
 
 ### Challenge
 
-- **URL: http://natas9.natas.labs.overthewire.org/**
+**URL: http://natas9.natas.labs.overthewire.org/**
 
 The search function on this page uses the PHP `passthru()` function to execute a system-level `grep` command. The backend code looks like this:
 
@@ -26,7 +26,7 @@ The variable `$key` is directly populated by the search box input. Because the a
     - `.*` is a regular expression meaning "match everything."
     - `grep` searches for "everything" inside `/etc/natas_webpass/natas10` first, then in `dictionary.txt`.
 
-![alt text](images/image-23.png)
+    ![alt text](images/image-23.png)
 
 ---
 

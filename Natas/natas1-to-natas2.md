@@ -2,7 +2,7 @@
 
 ### Challenge
 
-- **URL: http://natas1.natas.labs.overthewire.org/**
+**URL: http://natas1.natas.labs.overthewire.org/**
 
 ![alt text](images/image-2.png)
 

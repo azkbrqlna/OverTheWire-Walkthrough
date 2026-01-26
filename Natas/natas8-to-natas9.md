@@ -2,7 +2,7 @@
 
 ### Challenge
 
-- **URL: http://natas8.natas.labs.overthewire.org/**
+**URL: http://natas8.natas.labs.overthewire.org/**
 
 Clicking "View sourcecode" reveals the following PHP function used to hide the secret:
 

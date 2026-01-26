@@ -2,7 +2,7 @@
 
 ### Challenge
 
-- **URL: http://natas7.natas.labs.overthewire.org/**
+**URL: http://natas7.natas.labs.overthewire.org/**
 
 The website has a navigation menu (Home, About). When you click them, notice how the URL changes to include a page parameter: index.php?page=home
 

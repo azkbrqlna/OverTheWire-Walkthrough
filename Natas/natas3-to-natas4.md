@@ -2,8 +2,8 @@
 
 ### Challenge
 
-- **URL: http://natas3.natas.labs.overthewire.org/**
-  ![alt text](images/image-8.png)
+**URL: http://natas3.natas.labs.overthewire.org/**
+![alt text](images/image-8.png)
 
 ### Walkthrough
 
