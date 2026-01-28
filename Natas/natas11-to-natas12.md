@@ -2,7 +2,7 @@
 
 ### Challenge
 
-**URL: [http://natas11.natas.labs.overthewire.org/](https://www.google.com/search?q=http://natas11.natas.labs.overthewire.org/)**
+**URL: http://natas11.natas.labs.overthewire.org/**
 
 This level stores user preferences in a cookie named `data`. The data is protected using **XOR Encryption**. Because XOR is a symmetric operation, we can mathematically derive the secret key if we possess both the original **Plaintext** and the encrypted **Ciphertext**.
 
