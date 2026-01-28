@@ -2,7 +2,7 @@
 
 ### Challenge
 
-**URL: [http://natas14.natas.labs.overthewire.org/](https://www.google.com/search?q=http://natas14.natas.labs.overthewire.org/)**
+**URL: http://natas14.natas.labs.overthewire.org/**
 
 This level demonstrates a classic **SQL Injection (SQLi)** vulnerability within a login authentication system. The PHP script takes user input from a POST request and directly concatenates it into a SQL query string. Because the input is enclosed in double quotes (`"`) and not sanitized, we can inject SQL commands to alter the logic of the query. The vulnerable query construction is: `$query = "SELECT * from users where username=\"".$_REQUEST["username"]."\" and password=\"".$_REQUEST["password"]."\"";`
 

@@ -2,7 +2,7 @@
 
 ### Challenge
 
-**URL: [http://natas15.natas.labs.overthewire.org/](https://www.google.com/url?sa=E&source=gmail&q=http://natas15.natas.labs.overthewire.org/)**
+**URL: http://natas15.natas.labs.overthewire.org/**
 
 This level introduces **Boolean-based Blind SQL Injection**. Unlike previous levels, the application does not display any data from the database. It only returns one of two messages: "This user exists" or "This user doesn't exist." To extract the password, we must ask the database a series of True/False questions. The vulnerable query is:`$query = "SELECT * from users where username=\"".$_REQUEST["username"]."\"";`
 
