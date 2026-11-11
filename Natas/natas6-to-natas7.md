@@ -27,13 +27,13 @@ The goal is to find the value of the `$secret` variable which is stored in the i
 
 - In the source code, you see the path: `includes/secret.inc`. This is a relative path on the web server.
 - Since the server doesn't block access to this directory, you can view the file by appending the path to the base URL: `http://natas6.natas.labs.overthewire.org/includes/secret.inc`
-- When you open that URL. You will see the PHP variable assignment:
+- Opening that URL shows the PHP variable assignment:
   ```
   <?
   $secret = "FOEIUWGHFEEUHOFUOIU";
   ?>
   ```
-- **Submit the Secret:**
+- Submit the secret:
   - Go back to the main Natas 6 page.
   - Paste `FOEIUWGHFEEUHOFUOIU` into the input box.
   - Click **Submit Query**.

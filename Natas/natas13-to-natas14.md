@@ -4,13 +4,13 @@
 
 **URL: http://natas13.natas.labs.overthewire.org/**
 
-Level 13 is similar to the previous level but with an added security layer. The server now uses the PHP function `exif_imagetype()` to verify if the uploaded file is a genuine image. This function checks the **Magic Bytes** (the first few bytes of a file) to determine its type. If these bytes do not match a valid image format (like JPEG, PNG, or GIF), the upload will be rejected.
+Level 13 works like Level 12, except the server calls `exif_imagetype()` to inspect the file's magic bytes. Uploads whose leading bytes do not match a valid image format (JPEG, PNG, or GIF) are rejected.
 
 ---
 
 ### Walkthrough
 
-1. The server checks for real image headers. To bypass this, we need to prepend our PHP payload with the Magic Bytes of an image format. For example, the Magic Bytes for a **GIF** file are `GIF89a`
+1. To pass `exif_imagetype()`, prepend the magic bytes of a GIF file (`GIF89a`) to the PHP payload.
 
 2. Create a file on your computer (e.g., `solver.php`). We will start the file with the GIF signature and then follow it with our PHP code:
 
@@ -21,9 +21,9 @@ Level 13 is similar to the previous level but with an added security layer. The 
    ?>
    ```
 
-   The server's `exif_imagetype() `will see `GIF89a`, assume it's a GIF image, and allow the upload.
+   The server's `exif_imagetype()` reads `GIF89a`, treats the file as a GIF image, and accepts the upload.
 
-3. **Inject and Upload:**
+3. Modify the form and upload `solver.php`:
    - Right-click the page and select **Inspect** (F12) to open Developer Tools.
    - Find the hidden input: `<input type="hidden" name="filename" value="[random].jpg">`.
    - Double-click the `value` and change the extension from `.jpg` to `.php`.

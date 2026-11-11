@@ -6,8 +6,6 @@
 
 Clicking "View sourcecode" reveals the following PHP function used to hide the secret:
 
-PHP
-
 ```
 <?
 
@@ -30,15 +28,14 @@ if(array_key_exists("submit", $_POST)) {
 ### Walkthrough
 
 - The `encodeSecret` function performs three operations in this specific order:
-  - **Step 1:** `base64_encode($secret)`
-  - **Step 2:** `strrev()` (Reverses the string)
-  - **Step 3:** `bin2hex()` (Converts binary data to hexadecimal)
-- To find the original secret, we must apply the inverse of these functions in the **reverse order**:
-  - **Step 1:** `hex2bin()` (Convert the hex string back to binary/string)
-  - **Step 2:** `strrev()` (Reverse the string back to its original orientation)
-  - **Step 3:** `base64_decode()` (Decode the Base64 string)
-- You can use an online PHP sandbox or a local terminal to run this logic:
-  PHP
+  1. `base64_encode($secret)`
+  2. `strrev()` (reverses the string)
+  3. `bin2hex()` (converts binary data to hexadecimal)
+- To recover the original secret, apply the inverse functions in reverse order:
+  1. `hex2bin()` (convert hex back to binary/string)
+  2. `strrev()` (reverse the string back)
+  3. `base64_decode()` (decode Base64)
+- Run this logic in PHP to decode it:
   ```
   <?php
   $encoded = "3d3d516343746d4d6d6c315669563362";

@@ -6,21 +6,22 @@ The goal of this level is to log into the Bandit server using SSH on port `2220`
 
 ### Walkthrough
 
-1.  **Connect via SSH:** Open a terminal and connect to `bandit.labs.overthewire.org` on port `2220` using the credentials provided above:
+1.  Connect to `bandit.labs.overthewire.org` on port `2220` as `bandit0` (password `bandit0`):
 
     ```
-    ssh bandit0@bandit.labs.overthewire.org -p 2220
+    ┌──(nothspec㉿Nothspec)-[~]
+    └─$ ssh bandit0@bandit.labs.overthewire.org -p 2220
     ```
 
     Type `yes` if prompted to accept the host key, then enter the password `bandit0`.
-2.  **List the Home Directory:** Once logged in (`/home/bandit0`), list the files in the directory to locate the file containing the password:
+2.  Once logged in (`/home/bandit0`), list the files in the directory:
 
     ```
     ls -la
     ```
 
     You will see a file named `readme` (`-rw-r----- 1 bandit1 bandit0`).
-3.  **Read the Password File:** Display the contents of `readme` using `cat` to reveal the password for the next level:
+3.  Print the contents of `readme` with `cat`:
 
     ```
     cat readme

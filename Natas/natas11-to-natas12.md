@@ -4,9 +4,9 @@
 
 **URL: http://natas11.natas.labs.overthewire.org/**
 
-This level stores user preferences in a cookie named `data`. The data is protected using **XOR Encryption**. Because XOR is a symmetric operation, we can mathematically derive the secret key if we possess both the original **Plaintext** and the encrypted **Ciphertext**.
+This level stores user preferences in a cookie named `data`, encrypted with XOR. Because XOR is symmetric, we can derive the secret key when we have both the plaintext and the ciphertext.
 
-The fundamental property we exploit is:
+XOR satisfies:
 
 $$Plaintext \oplus Ciphertext = Key$$
 
@@ -14,9 +14,7 @@ $$Plaintext \oplus Ciphertext = Key$$
 
 ### Walkthrough
 
-1. **Retrieve the Ciphertext:**
-
-   Open your browser's Developer Tools (**F12**) -> **Application/Storage** -> **Cookies**. Copy the value of the `data` cookie.
+1. Open your browser's Developer Tools (**F12**) -> **Application/Storage** -> **Cookies** and copy the value of the `data` cookie.
 
 2. Use the following PHP script to XOR the known default data with the cookie value you just retrieved. This will reveal the repeating secret key.
 
@@ -35,7 +33,7 @@ $$Plaintext \oplus Ciphertext = Key$$
 
    ![alt text](images/image-25.png)
 
-3. Now that we know the key is **`eDWo`**, we can encrypt a new data set where `showpassword` is set to `yes`.
+3. Now that we know the key is `eDWo`, encrypt a new JSON payload with `showpassword` set to `yes`:
 
    ```
    <?php
@@ -57,7 +55,7 @@ $$Plaintext \oplus Ciphertext = Key$$
 
    ![alt text](images/image-26.png)
 
-4. **Injection:**
+4. Replace the cookie and refresh:
    - Copy the output string from the second script.
    - Return to the browser's editor.
    - Replace the existing `data` cookie value with your new string.

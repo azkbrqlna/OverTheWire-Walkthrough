@@ -4,7 +4,7 @@
 
 **URL: http://natas17.natas.labs.overthewire.org/**
 
-This level presents a **Time-Based Blind SQL Injection**. It is significantly more challenging because the server provides **no visual feedback** whatsoever.
+This level uses time-based blind SQL injection. The server prints no visual feedback:
 
 Looking at the source code, the lines that previously printed "User exists" or "User doesn't exist" have been commented out:
 
@@ -16,17 +16,15 @@ if(mysqli_num_rows($res) > 0) {
 }
 ```
 
-Since we cannot see the result of the query, we must rely on a side channel: **Time**. We will force the database to pause (sleep) if our guess is correct.
+Since we cannot see the query result, we use response time as a side channel by forcing the database to sleep when a guess matches.
 
 ---
 
 ### Walkthrough
 
-1.  We can inject a conditional statement that executes the MySQL `SLEEP()` function.
-    - **Logic:** "If the password for user `natas18` starts with 'a', sleep for 5 seconds. Otherwise, return immediately."
-    - **Observation:**
-      - If the page takes 5+ seconds to load → The character is CORRECT.
-      - If the page loads instantly → The character is WRONG.
+1.  Inject a conditional statement that runs MySQL `SLEEP()`. If the password for `natas18` starts with `a`, wait 5 seconds; otherwise return immediately:
+    - Page takes 5+ seconds to load: the character matches.
+    - Page loads immediately: the character does not match.
 
 2.  We inject into the `username` field. The SQL query structure will look like this:
 
@@ -37,7 +35,7 @@ Since we cannot see the result of the query, we must rely on a side channel: **T
     - `0`: The action to take if not found (False - instant return).
     - `#`: Comments out the rest of the original query.
 
-3.  Checking response times manually is impractical. Below is a Python script to automate the process by measuring the request duration.
+3.  A Python script automates the checks by measuring how long each request takes:
 
     ```
     import requests
@@ -62,13 +60,13 @@ Since we cannot see the result of the query, we must rely on a side channel: **T
                     print(f"Found: {password_found}")
                     break
             except requests.exceptions.Timeout:
-                # In rare cases, a timeout might also indicate a successful sleep
+                # Timeout can also mean SLEEP() triggered
                 pass
 
     print(f"Final Password: {password_found}")
     ```
 
-4.  Run the script. Note that this extraction will take longer than previous levels (approx. 32 chars \* 3 seconds per char = ~1.5 to 2 minutes minimum) because of the deliberate delays.
+4.  Run the script. Extracting all 32 characters takes at least ~1.5 to 2 minutes because of the 3-second `SLEEP(3)` delays.
 
 ![alt text](images/image-33.png)
 

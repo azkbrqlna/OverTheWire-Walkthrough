@@ -6,7 +6,7 @@
 
 The website provides a simple file upload interface for JPEG images. By examining the source code, we see that the application generates a random filename but determines the file extension based on a hidden HTML input field named `filename`.
 
-The vulnerability lies in the fact that the server trusts the user-supplied extension from the POST data without validating if the uploaded file content matches the expected format.
+The server trusts the extension from the POST `filename` parameter without checking whether the uploaded file matches that format.
 
 ---
 
@@ -29,7 +29,7 @@ The vulnerability lies in the fact that the server trusts the user-supplied exte
    ?>
    ```
 
-3. **Inject and Upload:**
+3. Modify the form and upload `solver.php`:
    - Right-click the page and select **Inspect** (F12) to open Developer Tools.
    - Find the hidden input: `<input type="hidden" name="filename" value="[random].jpg">`.
    - Double-click the `value` and change the extension from `.jpg` to `.php`.

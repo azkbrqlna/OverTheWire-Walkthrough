@@ -10,9 +10,9 @@
 
 ### Walkthrough
 
-1.  **Access the Site:** Navigate to the URL and log in using the credentials provided above. The page displays a message stating that the password for the next level is hidden on this page.
-2.  **Inspect the Source Code:** Right-click anywhere on the page and select **Inspect** (or press `Ctrl+Shift+I` / `F12`). Alternatively, you can view the raw source by pressing `Ctrl+U`.
-3.  **Locate the password:** Look within the HTML elements. Developers often leave comments in the code that are not visible on the rendered page.
+1.  Open the URL and log in using the credentials above. The page says the password for the next level is hidden on this page.
+2.  Right-click on the page and choose **Inspect** (or press `Ctrl+Shift+I` / `F12`), or press `Ctrl+U` to view the raw HTML source.
+3.  Check the HTML comments inside the source, since comments do not render on the page.
 
     ![alt text](images/image-1.png)
 

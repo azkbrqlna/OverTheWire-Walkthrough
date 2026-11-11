@@ -7,14 +7,14 @@
 
 ### Walkthrough
 
-- The phrase _" No more information leaks!! Not even Google will find it this time..."_ is a strong hint toward the **`robots.txt`** file. This file is used by websites to tell search engine crawlers (like Googlebot) which pages or directories they are not allowed to visit.
+- The phrase _"No more information leaks!! Not even Google will find it this time..."_ points to `robots.txt`, which tells search engine crawlers which paths not to index.
   ![alt text](images/image-9.png)
-- Navigate to the standard location for this file by appending `/robots.txt` to the URL: `http://natas3.natas.labs.overthewire.org/robots.txt`
-- The file will likely contain a "Disallow" entry. This indicates that a directory named `/s3cr3t/` exists but is hidden from search engines.
+- Open `http://natas3.natas.labs.overthewire.org/robots.txt`.
+- It contains a `Disallow` entry for `/s3cr3t/`, showing that the directory exists on the server.
   ![alt text](images/image-10.png)
-- Navigate to the discovered directory: `http://natas3.natas.labs.overthewire.org/s3cr3t/`
+- Go to `http://natas3.natas.labs.overthewire.org/s3cr3t/`.
   ![alt text](images/image-11.png)
-- Inside the directory listing, you will find a file (typically `users.txt`). Open it to find the password for the next level.
+- Open `users.txt` from the directory listing to read the password for the next level.
   ![alt text](images/image-12.png)
 
 ---

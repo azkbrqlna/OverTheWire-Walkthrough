@@ -10,7 +10,7 @@ The search function on this page uses the PHP `passthru()` function to execute a
 passthru("grep -i $key dictionary.txt");
 ```
 
-The variable `$key` is directly populated by the search box input. Because the application fails to sanitize this input, we can inject additional arguments to the `grep` command, turning a simple search into a tool to read sensitive system files.
+The variable `$key` comes directly from the search box without sanitization, so we can pass additional file arguments to `grep` and read other files on the system.
 
 ### Walkthrough
 
@@ -21,10 +21,7 @@ The variable `$key` is directly populated by the search box input. Because the a
     .* /etc/natas_webpass/natas10
     ```
 
-3.  **How it Works:**
-    - The full command becomes: `grep -i .* /etc/natas_webpass/natas10 dictionary.txt`
-    - `.*` is a regular expression meaning "match everything."
-    - `grep` searches for "everything" inside `/etc/natas_webpass/natas10` first, then in `dictionary.txt`.
+3.  The full command becomes `grep -i .* /etc/natas_webpass/natas10 dictionary.txt`. Because `.*` matches everything, `grep` prints lines from `/etc/natas_webpass/natas10` first and then searches `dictionary.txt`.
 
     ![alt text](images/image-23.png)
 
