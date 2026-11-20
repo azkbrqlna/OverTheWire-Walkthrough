@@ -2,6 +2,8 @@
 
 ### Challenge
 
+test ajah
+
 The goal of this level is to log into the Bandit server using SSH on port `2220`, then locate and read the `readme` file in the home directory to find the password for `bandit1`.
 
 ### Walkthrough
