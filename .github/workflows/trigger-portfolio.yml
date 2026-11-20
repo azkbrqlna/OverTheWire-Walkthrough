@@ -1,0 +1,12 @@
+name: Trigger Portfolio Rebuild
+on:
+  push:
+    branches:
+      - main
+jobs:
+  notify-netlify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Netlify Build Hook
+        run: |
+          curl -X POST -d '{}' "${{ secrets.NETLIFY_BUILD_HOOK }}"
